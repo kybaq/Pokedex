@@ -4,7 +4,7 @@ import QueryProvider from "@/Provider";
 
 export const metadata: Metadata = {
   title: "Pokédex",
-  description: "Pokemon index about old day pokemons (1th Gen)",
+  description: "Pokemon index about oldie pokemons (1th Gen)",
 };
 
 export default function RootLayout({

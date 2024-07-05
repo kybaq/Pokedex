@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import axios from "axios";
-import { Pokemon } from "@/types/pokemon.type";
 
 export const GET = async (
   request: Request,

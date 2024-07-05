@@ -7,7 +7,7 @@ import { Pokemon } from "@/types/pokemon.type";
 
 const PokemonList: React.FC = () => {
   const {
-    data: pokemons: Pokemon[],
+    data: pokemons,
     isPending,
     isError,
   } = useQuery({
@@ -18,7 +18,7 @@ const PokemonList: React.FC = () => {
 
       return pokemons;
     },
-    staleTime: 60 * 1000,
+    // 메인페이지에서는 staleTime, gcTime 모두 기본값 정도로 사용, 더 길어도 좋을듯?
   });
 
   // 부모 컴포넌트에서 Suspense 로 대신 처리?
@@ -30,7 +30,7 @@ const PokemonList: React.FC = () => {
     <>
       <h1 className="text-center my-4 text-xl font-bold">Pokédex</h1>
       <ul className="grid grid-cols-5 gap-4">
-        {pokemons.map((pokemon) => {
+        {pokemons?.map((pokemon) => {
           return <PokemonCard key={pokemon.id} pokemon={pokemon} />;
         })}
       </ul>

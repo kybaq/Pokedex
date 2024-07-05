@@ -21,11 +21,14 @@ const PokemonDetail: React.FC<PokemonIdProps> = ({ id }) => {
 
       return pokemonData;
     },
+    // 캐시된 데이터를 사용하지 않고 매번 새로운 데이터를 가져오도록 설정.
+    // 포켓몬 상세 정보 페이지에 머무리는 시간은 30초 이상으로 설정. 30 초 지나면 캐시된 데이터는 삭제됨.
+    // 다른 포켓몬의 정보로 이동할 때, 캐시된 데이터가 나타나지 않도록 하기 위함.
     staleTime: 0,
-    // 해당 포켓몬 정보를 30초 이상은 볼 것 같은 느낌?!
     gcTime: 30 * 1000,
   });
 
+  // 부모 컴포넌트에서 Suspense 로 대신 처리?
   if (isPending) return <div>Loading...</div>;
 
   if (isError) return <div>Error with fetch Data. Sorry...</div>;
@@ -52,40 +55,42 @@ const PokemonDetail: React.FC<PokemonIdProps> = ({ id }) => {
         pokemonData.weight / 10
       }kg`}</span>
       <br />
-      <span>
+      <ul>
         Type:
-        {pokemonData.types.map((type) => {
+        {pokemonData.types.map((type, index) => {
           return (
-            <span
+            <li
+              key={index}
               className="appearance-none bg-orange-600 border border-gray-300 rounded-md shadow-sm box-border text-white 
             inline-block font-sans font-semibold text-base leading-5 py-1.5 px-4 relative text-center no-underline select-none 
             focus:outline-none hover:bg-orange-700 focus:ring-4 focus:ring-orange-300 disabled:bg-orange-300 disabled:border-gray-200 
             disabled:text-opacity-80 disabled:cursor-default active:bg-orange-800 active:shadow-inner"
             >
               {type.type.name}
-            </span>
+            </li>
           );
         })}
-      </span>
-      <span className="my-2">
+      </ul>
+      <ul className="my-2">
         Ability:
-        {pokemonData.abilities.map((ability) => {
+        {pokemonData.abilities.map((ability, index) => {
           return (
-            <span
+            <li
+              key={index}
               className="appearance-none bg-green-600 border border-gray-300 rounded-md shadow-sm box-border text-white 
             inline-block font-sans font-semibold text-base leading-5 py-1.5 px-4 relative text-center no-underline select-none 
             focus:outline-none hover:bg-green-700 focus:ring-4 focus:ring-green-300 disabled:bg-green-300 disabled:border-gray-200 
             disabled:text-opacity-80 disabled:cursor-default active:bg-green-800 active:shadow-inner"
             >
               {ability.ability.name}
-            </span>
+            </li>
           );
         })}
-      </span>
+      </ul>
       <span>Move:</span>
       <ul className="grid grid-cols-5 gap-2">
-        {pokemonData.moves.map((move) => {
-          return <li>{move.move.name}</li>;
+        {pokemonData.moves.map((move, index) => {
+          return <li key={index}>{move.move.name}</li>;
         })}
       </ul>
 
